@@ -12,7 +12,9 @@ def hello_world():
         "index.html",
         titles=movie_data['titles'],
         poster_paths=movie_data['poster_paths'],
-        overviews=movie_data['overviews']
+        taglines=movie_data['taglines'],
+        ids=movie_data['ids'],
+        genres=movie_data['genres']
     )
 
 app.run(

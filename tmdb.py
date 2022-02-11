@@ -1,5 +1,7 @@
+import abc
 import os
 import requests
+import random
 from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
@@ -18,27 +20,65 @@ def get_movie_data(k):
     )
     data = response.json()
 
+    r = random.randint(0,19)
+
+    id = data["results"][r]["id"]
+
+    def get_id(i):
+        ids = []
+        for j in range(i):
+            ids.append(data["results"][r]["id"])
+        return ids
+
+    def get_genre(i):
+        GENRE_URL = "https://api.themoviedb.org/3/movie/" + str(id) + "?"
+        genre_params = {
+            "movie_id": get_id(i),
+            "api_key": TMDB_KEY,
+        }
+        genre_response = requests.get(
+            GENRE_URL,
+            params=genre_params,
+        )
+        genre_data = genre_response.json()
+        genres = []
+        for j in range(i):
+            genres.append(genre_data["genres"][0]["name"])
+        return genres
+
     def get_title(i):
         titles = []
         for j in range(i):
-            titles.append(data["results"][j]["title"])
+            titles.append(data["results"][r]["title"])
         return titles
         #return data["results"]
 
     def get_poster_path(i):
         poster_paths = []
         for j in range(i):
-            poster_paths.append(data["results"][j]["poster_path"])
+            poster_paths.append(data["results"][r]["poster_path"])
         return poster_paths
 
-    def get_overview(i):
-        overviews = []
+    def get_tagline(i):
+        TAGLINE_URL = "https://api.themoviedb.org/3/movie/" + str(id) + "?"
+        tagline_params = {
+            "movie_id": get_id(i),
+            "api_key": TMDB_KEY,
+        }
+        tagline_response = requests.get(
+            TAGLINE_URL,
+            params=tagline_params,
+        )
+        tagline_data = tagline_response.json()
+        taglines = []
         for j in range(i):
-            overviews.append(data["results"][j]["overview"])
-        return overviews
+            taglines.append(tagline_data["tagline"])
+        return taglines
 
     return {
         'titles': list(get_title(k)),
         'poster_paths': list(get_poster_path(k)),
-        'overviews': list(get_overview(k))
+        'taglines': list(get_tagline(k)),
+        'ids' : list(get_id(k)),
+        'genres' : list(get_genre(k))
     }

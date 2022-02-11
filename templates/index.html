@@ -4,13 +4,12 @@
         <link rel="stylesheet" href={{ url_for( 'static', filename='style.css' ) }} />
     </head>
     <body>
-        <h1>List of Popular Movies</h1>
-        {% for i in range(20) %}
-        <h2>
-            <p><b>{{ titles[i] }}</b></p>
-            <img src="https://image.tmdb.org/t/p/w500{{ poster_paths[i] }}">
-            <p><b>{{ overviews[i] }}</b></p>
-        </h2>
+        <h1>Random Popular Movie</h1>
+        {% for i in range(1) %}
+        <h2><p><b>{{ titles[i]}}</b></p></h2>
+        <img src="https://image.tmdb.org/t/p/w500{{ poster_paths[i] }}">
+        <h3><p><b>{{ taglines[i] }}</b></p></h3>
+        <h4><p><b>Genre: {{ genres[i] }}</b></p></h4>
         {% endfor %}
     </body>
 </html>
