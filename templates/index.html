@@ -8,6 +8,8 @@
         {% for i in range(20) %}
         <h2>
             <p><b>{{ titles[i] }}</b></p>
+            <img src="https://image.tmdb.org/t/p/w500{{ poster_paths[i] }}">
+            <p><b>{{ overviews[i] }}</b></p>
         </h2>
         {% endfor %}
     </body>

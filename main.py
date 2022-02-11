@@ -10,7 +10,9 @@ def hello_world():
     movie_data = get_movie_data(20)
     return render_template(
         "index.html",
-        titles=movie_data['titles']
+        titles=movie_data['titles'],
+        poster_paths=movie_data['poster_paths'],
+        overviews=movie_data['overviews']
     )
 
 app.run(
