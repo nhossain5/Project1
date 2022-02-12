@@ -1,13 +1,13 @@
 import os
 from flask import Flask, render_template
-from tmdbAndWiki import get_movie_data
+from tmdb_and_wiki import get_movie_data
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 @app.route('/', methods=["POST", "GET"])
 def hello_world():
-    movie_data = get_movie_data(20)
+    movie_data = get_movie_data()
     return render_template(
         "index.html",
         titles=movie_data['titles'],
