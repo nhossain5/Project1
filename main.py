@@ -1,3 +1,6 @@
+"""
+This is the main application file
+"""
 import os
 from flask import Flask, render_template
 from tmdb_and_wiki import get_movie_data
@@ -7,6 +10,9 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 @app.route('/', methods=["POST", "GET"])
 def hello_world():
+    """
+    This functions retrieves movie data and sends it to the index.html file
+    """
     movie_data = get_movie_data()
     return render_template(
         "index.html",

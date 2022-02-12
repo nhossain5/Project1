@@ -1,3 +1,6 @@
+"""
+This is the application file with functions made using the APIs
+"""
 import os
 import random
 import requests
@@ -9,6 +12,9 @@ BASE_URL = "https://api.themoviedb.org/3/trending/movie/day"
 TMDB_KEY = os.getenv("TMDB_KEY")
 
 def get_movie_data():
+    """
+    This function gives us certains details about random popular movies
+    """
     params = {
     "api_key": TMDB_KEY
     }
@@ -84,7 +90,8 @@ def get_movie_data():
             )
         wikilink_data = wikilink_response.json()
         wikilinks = []
-        wikilinks.append("https://en.wikipedia.org/?curid="+str(wikilink_data["query"]["search"][0]["pageid"]))
+        wikilink = "https://en.wikipedia.org/?curid="
+        wikilinks.append(wikilink+str(wikilink_data["query"]["search"][0]["pageid"]))
         return wikilinks
 
     return {
