@@ -1,4 +1,3 @@
-import abc
 import os
 import requests
 import random
@@ -16,8 +15,8 @@ def get_movie_data(k):
 
     response = requests.get(
         BASE_URL,
-        params=params,
-    )
+        params=params
+        )
     data = response.json()
 
     r = random.randint(0,19)
@@ -34,12 +33,12 @@ def get_movie_data(k):
         GENRE_URL = "https://api.themoviedb.org/3/movie/" + str(id) + "?"
         genre_params = {
             "movie_id": get_id(i),
-            "api_key": TMDB_KEY,
-        }
+            "api_key": TMDB_KEY
+            }
         genre_response = requests.get(
             GENRE_URL,
-            params=genre_params,
-        )
+            params=genre_params
+            )
         genre_data = genre_response.json()
         genres = []
         for j in range(i):
@@ -63,22 +62,42 @@ def get_movie_data(k):
         TAGLINE_URL = "https://api.themoviedb.org/3/movie/" + str(id) + "?"
         tagline_params = {
             "movie_id": get_id(i),
-            "api_key": TMDB_KEY,
-        }
+            "api_key": TMDB_KEY
+            }
         tagline_response = requests.get(
             TAGLINE_URL,
-            params=tagline_params,
-        )
+            params=tagline_params
+            )
         tagline_data = tagline_response.json()
         taglines = []
         for j in range(i):
             taglines.append(tagline_data["tagline"])
         return taglines
 
+    def get_wikilink(i):
+        WIKI_URL = 'https://en.wikipedia.org/w/api.php'
+        title = get_title(i)
+        wikilink_params = {
+            'action': 'query',
+            'format': 'json',
+            "list": "search",
+            "srsearch": title[0] + " articletopic:films"
+            }
+        wikilink_response = requests.get(
+            WIKI_URL,
+            params=wikilink_params
+            )
+        wikilink_data = wikilink_response.json()
+        wikilinks = []
+        for j in range(i):
+            wikilinks.append("https://en.wikipedia.org/?curid="+str(wikilink_data["query"]["search"][0]["pageid"]))
+        return wikilinks
+
     return {
         'titles': list(get_title(k)),
         'poster_paths': list(get_poster_path(k)),
         'taglines': list(get_tagline(k)),
         'ids' : list(get_id(k)),
-        'genres' : list(get_genre(k))
+        'genres' : list(get_genre(k)),
+        'wikilinks' : list(get_wikilink(k))
     }

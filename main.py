@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template
-from tmdb import get_movie_data
+from tmdbAndWiki import get_movie_data
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -14,7 +14,8 @@ def hello_world():
         poster_paths=movie_data['poster_paths'],
         taglines=movie_data['taglines'],
         ids=movie_data['ids'],
-        genres=movie_data['genres']
+        genres=movie_data['genres'],
+        wikilinks=movie_data['wikilinks']
     )
 
 app.run(
